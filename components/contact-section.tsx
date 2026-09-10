@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -12,14 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  MessageCircle,
-  MapPin,
-  Clock,
-  Phone,
-  Mail,
-  Send,
-} from "lucide-react"
+import { MessageCircle, MapPin, Clock, Phone, Mail, Send } from "lucide-react"
+import { HandCheck, Squiggle } from "@/components/doodles"
 
 const tiposSeguros = [
   "Automotor",
@@ -31,81 +24,129 @@ const tiposSeguros = [
   "Otro",
 ]
 
+/** Campos con pinta de formulario de papel: solo una línea abajo. */
+const campo =
+  "h-11 rounded-none border-x-0 border-t-0 border-b-2 border-line bg-transparent px-0 text-base shadow-none placeholder:text-ink-faint/70 focus-visible:border-brand focus-visible:ring-0"
+
+const etiqueta =
+  "text-xs font-bold uppercase tracking-widest text-ink-faint"
+
+const datos = [
+  {
+    icon: Phone,
+    label: "Teléfono",
+    value: "11 3596-3691",
+    href: "tel:+541135963691",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "info@poner.com.ar",
+    href: "mailto:info@poner.com.ar",
+  },
+  { icon: MapPin, label: "Dónde estamos", value: "Buenos Aires, Argentina" },
+  { icon: Clock, label: "Horarios", value: "Lunes a viernes, de 9 a 18 h" },
+]
+
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 4000)
+    setTimeout(() => setSubmitted(false), 5000)
   }
 
   return (
     <section
       id="contacto"
-      className="relative py-20 md:py-28 bg-secondary"
+      className="paper-grid scroll-mt-[84px] bg-paper py-20 md:scroll-mt-[104px] md:py-28"
     >
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 z-0 opacity-10"
-
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-6">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Contacto
-          </span>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Hablemos sobre tu cobertura
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <span className="eyebrow-hand">contanos</span>
+          <h2 className="mt-2 text-balance text-4xl font-semibold text-ink md:text-5xl">
+            Escribinos y charlamos
           </h2>
-          <p className="mt-4 text-pretty text-muted-foreground leading-relaxed">
-            Completá el formulario y te contactamos a la brevedad, o escribinos
-            directamente por WhatsApp.
+          <Squiggle className="mx-auto mt-5 h-3 w-32 text-ochre" />
+          <p className="mt-5 text-pretty leading-relaxed text-ink-soft">
+            Dejanos tus datos y te contactamos a la brevedad. Si preferís algo
+            más rápido, mandanos un WhatsApp y listo.
           </p>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
-          {/* Form */}
+        <div className="grid gap-12 lg:grid-cols-5 lg:gap-14">
+          {/* Formulario */}
           <div className="lg:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="rounded-2xl border border-border bg-background/95 p-8 shadow-sm backdrop-blur-sm"
+              className="card-paper tilt-xs relative rounded-sm p-7 sm:p-9"
             >
+              <div className="mb-8 flex items-end justify-between gap-4 border-b-2 border-dashed border-line pb-4">
+                <div>
+                  <p className="text-display text-2xl font-semibold text-ink">
+                    Pedido de presupuesto
+                  </p>
+                  <p className="text-hand text-xl text-ink-faint">
+                    completalo tranquilo, son 4 datos
+                  </p>
+                </div>
+                <span className="hidden shrink-0 -rotate-6 border-2 border-brand/50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-brand/70 sm:block">
+                  sin cargo
+                </span>
+              </div>
+
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="nombre">Nombre completo</Label>
+                  <Label htmlFor="nombre" className={etiqueta}>
+                    Nombre completo
+                  </Label>
                   <Input
                     id="nombre"
+                    name="nombre"
                     placeholder="Tu nombre"
                     required
+                    className={campo}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="telefono">Teléfono</Label>
+                  <Label htmlFor="telefono" className={etiqueta}>
+                    Teléfono
+                  </Label>
                   <Input
                     id="telefono"
+                    name="telefono"
                     type="tel"
-                    placeholder="+54 11 3596-3691"
+                    placeholder="11 5555-5555"
                     required
+                    className={campo}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className={etiqueta}>
+                    Email
+                  </Label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="tu@email.com"
                     required
+                    className={campo}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="tipo-seguro">Tipo de seguro</Label>
+                  <Label htmlFor="tipo-seguro" className={etiqueta}>
+                    Qué querés asegurar
+                  </Label>
                   <Select required>
-                    <SelectTrigger id="tipo-seguro" className="w-full">
-                      <SelectValue placeholder="Seleccioná una opción" />
+                    <SelectTrigger
+                      id="tipo-seguro"
+                      className={`${campo} w-full data-[size=default]:h-11`}
+                    >
+                      <SelectValue placeholder="Elegí una opción" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="rounded-sm border-2 border-ink bg-card">
                       {tiposSeguros.map((tipo) => (
                         <SelectItem key={tipo} value={tipo.toLowerCase()}>
                           {tipo}
@@ -116,105 +157,99 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <div className="mt-6 flex flex-col gap-2">
-                <Label htmlFor="mensaje">Mensaje</Label>
+              <div className="mt-7 flex flex-col gap-2">
+                <Label htmlFor="mensaje" className={etiqueta}>
+                  Contanos un poco más
+                </Label>
                 <Textarea
                   id="mensaje"
-                  placeholder="Contanos qué necesitás..."
+                  name="mensaje"
+                  placeholder="Por ejemplo: tengo un Gol 2015 y quiero pasar a todo riesgo..."
                   rows={4}
-                  className="resize-none"
+                  className="paper-lined resize-none rounded-none border-x-0 border-t-0 border-b-2 border-line bg-transparent px-0 py-1 text-base leading-7 shadow-none placeholder:text-ink-faint/70 focus-visible:border-brand focus-visible:ring-0"
                 />
               </div>
 
               <div className="mt-8">
                 {submitted ? (
-                  <div className="rounded-lg bg-primary/10 p-4 text-center text-sm font-medium text-primary">
-                    Gracias por tu consulta. Te contactaremos a la brevedad.
-                  </div>
+                  <p className="flex items-center gap-3 border-2 border-olive/40 bg-olive/10 px-5 py-4 text-olive">
+                    <HandCheck className="size-5 shrink-0" />
+                    <span className="text-hand text-xl">
+                      ¡Gracias! Te escribimos en breve.
+                    </span>
+                  </p>
                 ) : (
-                  <Button type="submit" className="h-11 w-full text-base sm:w-auto sm:px-8">
-                    <Send className="mr-2 size-4" />
-                    Enviar consulta
-                  </Button>
+                  <button
+                    type="submit"
+                    className="btn-stamp wobble-a w-full px-7 py-3.5 text-base sm:w-auto"
+                  >
+                    <Send className="size-4" />
+                    Enviar mi consulta
+                  </button>
                 )}
               </div>
             </form>
           </div>
 
-          {/* Contact info */}
-          <div className="flex flex-col gap-8 lg:col-span-2">
-            <div>
-              <h3 className="mb-6 text-lg font-semibold text-foreground">
-                Otras formas de contacto
-              </h3>
+          {/* Datos de contacto */}
+          <div className="lg:col-span-2">
+            <a
+              href="https://wa.me/541135963691"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="card-paper straighten tilt-r flex items-center gap-4 rounded-sm bg-[#eef6ea] p-5"
+            >
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-[#25D366] text-white">
+                <MessageCircle className="size-6" />
+              </span>
+              <span>
+                <span className="block text-lg font-semibold text-ink">
+                  Hablemos por WhatsApp
+                </span>
+                <span className="block text-sm text-ink-soft">
+                  +54 11 3596-3691
+                </span>
+              </span>
+            </a>
 
-              <div className="flex flex-col gap-6">
-                <a
-                  href="https://wa.me/541135963691"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-start gap-4 rounded-xl border border-border bg-background/80 p-5 transition-all hover:border-primary/20 hover:shadow-md backdrop-blur-sm"
-                >
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-green-50 text-green-600 group-hover:bg-green-100">
-                    <MessageCircle className="size-5" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">WhatsApp</p>
-                    <p className="text-sm text-muted-foreground">
-                      +54 11 3596-3691
-                    </p>
-                  </div>
-                </a>
+            <ul className="mt-10 flex flex-col">
+              {datos.map((dato) => {
+                const contenido = (
+                  <>
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-paper-warm text-brand">
+                      <dato.icon className="size-4" />
+                    </span>
+                    <span>
+                      <span className={`block ${etiqueta}`}>{dato.label}</span>
+                      <span className="block text-ink">{dato.value}</span>
+                    </span>
+                  </>
+                )
 
-                <div className="flex items-start gap-4 rounded-xl border border-border bg-background/80 p-5 backdrop-blur-sm">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <Phone className="size-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Teléfono</p>
-                    <p className="text-sm text-muted-foreground">
-                      11 3596-3691
-                    </p>
-                  </div>
-                </div>
+                return (
+                  <li
+                    key={dato.label}
+                    className="border-b border-dashed border-line py-4 last:border-b-0"
+                  >
+                    {dato.href ? (
+                      <a
+                        href={dato.href}
+                        className="flex items-center gap-4 transition-colors hover:text-brand"
+                      >
+                        {contenido}
+                      </a>
+                    ) : (
+                      <div className="flex items-center gap-4">{contenido}</div>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
 
-                <div className="flex items-start gap-4 rounded-xl border border-border bg-background/80 p-5 backdrop-blur-sm">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <Mail className="size-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Email</p>
-                    <p className="text-sm text-muted-foreground">
-                      info@poner.com.ar
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 rounded-xl border border-border bg-background/80 p-5 backdrop-blur-sm">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <MapPin className="size-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Dirección</p>
-                    <p className="text-sm text-muted-foreground">
-                      Buenos Aires, Argentina
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 rounded-xl border border-border bg-background/80 p-5 backdrop-blur-sm">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                    <Clock className="size-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Horarios</p>
-                    <p className="text-sm text-muted-foreground">
-                      Lunes a Viernes: 9:00 a 18:00
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <p className="text-hand mt-8 -rotate-1 text-2xl leading-snug text-ink-faint">
+              Si llamás y no atendemos, es porque estamos con otro cliente:
+              dejá mensaje que devolvemos.
+            </p>
           </div>
         </div>
       </div>

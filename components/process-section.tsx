@@ -1,4 +1,5 @@
 import { MessageSquare, Search, Send, ShieldCheck } from "lucide-react"
+import { CurvyArrow, Squiggle } from "@/components/doodles"
 
 const pasos = [
   {
@@ -6,92 +7,86 @@ const pasos = [
     icon: MessageSquare,
     title: "Nos contás qué necesitás",
     description:
-      "Comunicate con nosotros por teléfono, WhatsApp o completando el formulario. Contanos tu situación.",
+      "Por teléfono, por WhatsApp o con el formulario. Contanos tu situación como te salga, ya vamos a ordenarla nosotros.",
   },
   {
     step: 2,
     icon: Search,
-    title: "Analizamos tu caso",
+    title: "Lo miramos con lupa",
     description:
-      "Evaluamos tus necesidades y comparamos opciones entre las mejores compañías aseguradoras.",
+      "Evaluamos tus necesidades y comparamos opciones entre las mejores compañías aseguradoras del país.",
   },
   {
     step: 3,
     icon: Send,
-    title: "Te enviamos la mejor opción",
+    title: "Te pasamos la mejor opción",
     description:
-      "Recibís una propuesta clara y detallada, sin compromiso y totalmente adaptada a tu perfil.",
+      "Una propuesta clara, en criollo y sin compromiso. Si algo no se entiende, te lo explicamos las veces que haga falta.",
   },
   {
     step: 4,
     icon: ShieldCheck,
-    title: "Activamos tu cobertura",
+    title: "Quedás cubierto",
     description:
-      "Una vez que elegís, activamos tu póliza de forma inmediata. Quedás protegido al instante.",
+      "Cuando elegís, activamos la póliza enseguida. Y quedamos nosotros como tu contacto para lo que venga.",
   },
 ]
 
 export function ProcessSection() {
   return (
-    <section id="proceso" className="bg-secondary py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Cómo funciona
-          </span>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Contratar es simple
+    <section
+      id="proceso"
+      className="scroll-mt-[84px] bg-paper py-20 md:scroll-mt-[104px] md:py-28"
+    >
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <span className="eyebrow-hand">cómo trabajamos</span>
+          <h2 className="mt-2 text-balance text-4xl font-semibold text-ink md:text-5xl">
+            Cuatro pasos, ni uno más
           </h2>
-          <p className="mt-4 text-pretty text-muted-foreground leading-relaxed">
-            En solo cuatro pasos podés tener tu cobertura activa. Nosotros nos
-            encargamos de todo.
-          </p>
+          <Squiggle className="mx-auto mt-5 h-3 w-32 text-ochre" />
         </div>
 
-        <div className="relative mx-auto max-w-4xl">
-          {/* Vertical line connector - desktop */}
-          <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-border lg:block" />
+        {/* Hoja de cuaderno */}
+        <div className="card-paper paper-lined tilt-xs relative mx-auto max-w-3xl rounded-sm py-10 pl-16 pr-7 sm:pl-24 sm:pr-12">
+          {/* Margen rojo del cuaderno */}
+          <div className="absolute inset-y-0 left-10 w-px bg-brand/35 sm:left-16" />
 
-          <div className="grid gap-8 lg:gap-0">
-            {pasos.map((paso, i) => (
-              <div
-                key={paso.step}
-                className={`relative flex flex-col items-center gap-6 lg:flex-row ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                  }`}
-              >
-                {/* Content */}
-                <div
-                  className={`flex-1 ${i % 2 === 0 ? "lg:text-right lg:pr-12" : "lg:text-left lg:pl-12"
-                    }`}
-                >
-                  <div
-                    className={`rounded-2xl bg-background p-8 shadow-sm ${i % 2 === 0 ? "lg:ml-auto" : "lg:mr-auto"
-                      } max-w-md`}
-                  >
-                    <div className="mb-4 inline-flex size-10 items-center justify-center rounded-full bg-primary/10 lg:hidden">
-                      <paso.icon className="size-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {paso.title}
-                    </h3>
-                    <p className="mt-2 text-muted-foreground leading-relaxed">
-                      {paso.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Circle indicator - desktop */}
-                <div className="relative z-10 hidden lg:flex">
-                  <div className="flex size-14 items-center justify-center rounded-full border-4 border-background bg-primary shadow-lg">
-                    <paso.icon className="size-6 text-primary-foreground" />
-                  </div>
-                </div>
-
-                {/* Spacer for the other side */}
-                <div className="hidden flex-1 lg:block" />
-              </div>
+          {/* Perforaciones */}
+          <div className="absolute inset-y-0 left-4 flex flex-col justify-evenly py-12 sm:left-6">
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className="size-3.5 rounded-full border border-line bg-paper-deep"
+              />
             ))}
           </div>
+
+          <ol className="flex flex-col gap-9">
+            {pasos.map((paso) => (
+              <li key={paso.step} className="flex items-start gap-5">
+                <span className="text-hand -mt-2 w-8 shrink-0 text-4xl leading-none text-brand">
+                  {paso.step}.
+                </span>
+                <div className="min-w-0">
+                  <h3 className="flex items-center gap-2 text-xl font-semibold text-ink">
+                    <paso.icon className="size-5 shrink-0 text-olive" />
+                    {paso.title}
+                  </h3>
+                  <p className="mt-1.5 text-pretty leading-relaxed text-ink-soft">
+                    {paso.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="mx-auto mt-8 flex max-w-3xl items-start justify-center gap-2 pr-6 sm:justify-end">
+          <span className="text-hand mt-4 text-xl text-ink-faint">
+            en general, el mismo día ya tenés respuesta
+          </span>
+          <CurvyArrow className="h-10 w-10 rotate-[190deg] text-ochre" />
         </div>
       </div>
     </section>

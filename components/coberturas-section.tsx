@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -25,9 +24,9 @@ import {
   ShieldAlert,
   Truck,
   ArrowRight,
-  ChevronRight,
 } from "lucide-react"
 import { useState } from "react"
+import { HandCheck, Squiggle } from "@/components/doodles"
 
 const segurosPersonales = [
   {
@@ -107,173 +106,160 @@ const segurosPatrimoniales = [
 
 type ModalType = "personales" | "patrimoniales" | null
 
+const fichas = [
+  {
+    id: "personales" as const,
+    tab: "Para las personas",
+    title: "Seguros Personales",
+    image: "/seguros-personales-new.png",
+    alt: "Documentos y llaves sobre un escritorio",
+    intro: "Para vos, tu familia y tu equipo de trabajo.",
+    preview: ["Vida y ahorro", "Accidentes personales", "ART", "Sepelio"],
+    tilt: "tilt-l",
+  },
+  {
+    id: "patrimoniales" as const,
+    tab: "Para tus cosas",
+    title: "Seguros Patrimoniales",
+    image: "/seguros-patrimoniales-new.png",
+    alt: "Asesores conversando con clientes en la oficina",
+    intro: "Para el auto, la casa, el comercio y la empresa.",
+    preview: ["Autos y flotas", "Hogar", "Comercio", "Responsabilidad civil"],
+    tilt: "tilt-r",
+  },
+]
+
 export function CoberturasSection() {
   const [openModal, setOpenModal] = useState<ModalType>(null)
+  // Se conserva la última ficha abierta para que el contenido no cambie
+  // mientras el modal se está cerrando.
+  const [ultima, setUltima] = useState<Exclude<ModalType, null>>("personales")
+
+  const detalle =
+    ultima === "personales"
+      ? {
+          title: "Seguros Personales",
+          description:
+            "Coberturas pensadas para cuidar a las personas y su bienestar.",
+          items: segurosPersonales,
+        }
+      : {
+          title: "Seguros Patrimoniales",
+          description:
+            "Protección para tus bienes, tus vehículos y tu negocio.",
+          items: segurosPatrimoniales,
+        }
 
   return (
-    <section id="coberturas" className="bg-background py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section
+      id="coberturas"
+      className="scroll-mt-[84px] bg-paper-warm py-20 md:scroll-mt-[104px] md:py-28"
+    >
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Nuestras coberturas
-          </span>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Seguros para cada necesidad
+          <span className="eyebrow-hand">lo que sabemos hacer</span>
+          <h2 className="mt-2 text-balance text-4xl font-semibold text-ink md:text-5xl">
+            Un seguro para cada cosa que querés cuidar
           </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Ofrecemos una amplia gama de coberturas para proteger lo que más
-            valoras. Encontrá el seguro ideal para vos.
+          <Squiggle className="mx-auto mt-5 h-3 w-32 text-ochre" />
+          <p className="mt-5 text-pretty leading-relaxed text-ink-soft">
+            Abrí la carpeta que te interese y mirá todo lo que podemos cotizarte.
+            Si no está en la lista, preguntanos igual.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Seguros Personales Card */}
-          <button
-            onClick={() => setOpenModal("personales")}
-            className="group relative overflow-hidden rounded-xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            <div className="relative h-72 md:h-80">
-              <Image
-                src="/seguros-personales-new.png"
-                alt="Seguros Personales - documentos y llaves en escritorio"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 md:p-8">
-                <div>
-                  <h3 className="text-2xl font-bold text-white md:text-3xl">
-                    Seguros Personales
-                  </h3>
-                  <p className="mt-1 text-sm text-white/70">
-                    Vida, ART, sepelio y más
-                  </p>
-                </div>
-                <span className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform duration-300 group-hover:translate-x-1">
-                  <ChevronRight className="size-5" />
-                </span>
-              </div>
-            </div>
-          </button>
+        <div className="grid gap-10 md:grid-cols-2 md:gap-8">
+          {fichas.map((ficha) => (
+            <button
+              key={ficha.id}
+              onClick={() => {
+                setUltima(ficha.id)
+                setOpenModal(ficha.id)
+              }}
+              className={`card-paper straighten ${ficha.tilt} group relative rounded-sm p-4 pb-6 text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ochre/60`}
+            >
+              {/* Pestaña de carpeta */}
+              <span className="absolute -top-4 left-6 border-2 border-ink bg-ochre px-4 py-1 text-xs font-bold uppercase tracking-wider text-ink">
+                {ficha.tab}
+              </span>
 
-          {/* Seguros Patrimoniales Card */}
-          <button
-            onClick={() => setOpenModal("patrimoniales")}
-            className="group relative overflow-hidden rounded-xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            <div className="relative h-72 md:h-80">
-              <Image
-                src="/seguros-patrimoniales-new.png"
-                alt="Seguros Patrimoniales - asesores con clientes en oficina"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 md:p-8">
-                <div>
-                  <h3 className="text-2xl font-bold text-white md:text-3xl">
-                    Seguros Patrimoniales
-                  </h3>
-                  <p className="mt-1 text-sm text-white/70">
-                    Autos, hogar, comercio y más
-                  </p>
-                </div>
-                <span className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform duration-300 group-hover:translate-x-1">
-                  <ChevronRight className="size-5" />
-                </span>
+              <div className="relative mt-3 aspect-[16/10] overflow-hidden bg-paper-deep">
+                <Image
+                  src={ficha.image}
+                  alt={ficha.alt}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 460px"
+                  className="object-cover saturate-[0.9] transition-transform duration-500 group-hover:scale-[1.04]"
+                />
               </div>
-            </div>
-          </button>
+
+              <h3 className="mt-5 text-2xl font-semibold text-ink">
+                {ficha.title}
+              </h3>
+              <p className="mt-1 text-ink-soft">{ficha.intro}</p>
+
+              <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                {ficha.preview.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-ink-soft"
+                  >
+                    <HandCheck className="size-3.5 shrink-0 text-olive" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <span className="mt-6 inline-flex items-center gap-2 border-b-2 border-brand pb-0.5 text-sm font-bold text-brand">
+                Ver la lista completa
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Modal Seguros Personales */}
       <Dialog
-        open={openModal === "personales"}
+        open={openModal !== null}
         onOpenChange={(open) => !open && setOpenModal(null)}
       >
-        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
+        <DialogContent className="paper-lined max-h-[85vh] overflow-y-auto rounded-sm border-2 border-ink bg-card p-6 shadow-[6px_6px_0_0_var(--ink)] sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl text-foreground">
-              Seguros Personales
+            <DialogTitle className="text-display text-3xl font-semibold text-ink">
+              {detalle.title}
             </DialogTitle>
-            <DialogDescription>
-              Coberturas pensadas para proteger a las personas y su bienestar.
+            <DialogDescription className="text-ink-soft">
+              {detalle.description}
             </DialogDescription>
           </DialogHeader>
-          <ul className="mt-2 flex flex-col gap-3">
-            {segurosPersonales.map((seguro) => (
-              <li
-                key={seguro.title}
-                className="flex items-start gap-4 rounded-lg border border-border p-4 transition-colors hover:bg-secondary"
-              >
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <seguro.icon className="size-5" />
-                </div>
-                <div className="min-w-0">
-                  <p className="font-semibold text-foreground">
-                    {seguro.title}
-                  </p>
-                  <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
-                    {seguro.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4">
-            <Button asChild className="w-full">
-              <a href="#contacto" onClick={() => setOpenModal(null)}>
-                Solicitar cotización
-                <ArrowRight className="ml-2 size-4" />
-              </a>
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
 
-      {/* Modal Seguros Patrimoniales */}
-      <Dialog
-        open={openModal === "patrimoniales"}
-        onOpenChange={(open) => !open && setOpenModal(null)}
-      >
-        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-2xl text-foreground">
-              Seguros Patrimoniales
-            </DialogTitle>
-            <DialogDescription>
-              Protección integral para tus bienes, vehículos y negocios.
-            </DialogDescription>
-          </DialogHeader>
-          <ul className="mt-2 flex flex-col gap-3">
-            {segurosPatrimoniales.map((seguro) => (
+          <ul className="mt-1 flex flex-col">
+            {detalle.items.map((seguro) => (
               <li
                 key={seguro.title}
-                className="flex items-start gap-4 rounded-lg border border-border p-4 transition-colors hover:bg-secondary"
+                className="flex items-start gap-4 border-b border-dashed border-line py-3 last:border-b-0"
               >
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <seguro.icon className="size-5" />
-                </div>
+                <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-paper-warm text-brand">
+                  <seguro.icon className="size-4" />
+                </span>
                 <div className="min-w-0">
-                  <p className="font-semibold text-foreground">
-                    {seguro.title}
-                  </p>
-                  <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
+                  <p className="font-semibold text-ink">{seguro.title}</p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-ink-soft">
                     {seguro.description}
                   </p>
                 </div>
               </li>
             ))}
           </ul>
-          <div className="mt-4">
-            <Button asChild className="w-full">
-              <a href="#contacto" onClick={() => setOpenModal(null)}>
-                Solicitar cotización
-                <ArrowRight className="ml-2 size-4" />
-              </a>
-            </Button>
-          </div>
+
+          <a
+            href="#contacto"
+            onClick={() => setOpenModal(null)}
+            className="btn-stamp wobble-a mt-2 w-full px-6 py-3"
+          >
+            Pedir presupuesto de esto
+            <ArrowRight className="size-4" />
+          </a>
         </DialogContent>
       </Dialog>
     </section>

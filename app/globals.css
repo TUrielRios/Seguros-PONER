@@ -3,47 +3,60 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ==========================================================================
+   Poner Seguros — sistema visual "papel y tinta"
+   Paleta cálida de papel artesanal, tinta marrón y el rojo de la marca.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --card: #ffffff;
-  --card-foreground: #1a1a1a;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #ea3333;
-  --primary-foreground: #ffffff;
-  --secondary: #f7f7f6;
-  --secondary-foreground: #595856;
-  --muted: #f5f5f4;
-  --muted-foreground: #737170;
-  --accent: #595856;
-  --accent-foreground: #ffffff;
-  --destructive: #ea3333;
-  --destructive-foreground: #ffffff;
-  --border: #e5e5e3;
-  --input: #e5e5e3;
-  --ring: #ea3333;
-  --chart-1: #ea3333;
-  --chart-2: #595856;
-  --chart-3: #1a1a1a;
-  --chart-4: #a3a19f;
-  --chart-5: #d4d4d2;
-  --radius: 0.5rem;
-  --sidebar: #f7f7f6;
-  --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #ea3333;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f5f5f4;
-  --sidebar-accent-foreground: #595856;
-  --sidebar-border: #e5e5e3;
-  --sidebar-ring: #ea3333;
+  /* Papeles */
+  --paper: #f8f2e6;
+  --paper-warm: #f2e8d6;
+  --paper-deep: #ebdfc8;
+
+  /* Tintas */
+  --ink: #2c221a;
+  --ink-soft: #6d5c4a;
+  --ink-faint: #9a8873;
+
+  /* Marca y acentos */
+  --brand: #e0271f;
+  --brand-deep: #b01d17;
+  --ochre: #dda12c;
+  --olive: #6f7d4f;
+  --line: #d7c6a9;
+
+  /* Tokens shadcn mapeados al sistema nuevo */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #fffaf0;
+  --card-foreground: var(--ink);
+  --popover: #fffaf0;
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: #fff8ec;
+  --secondary: var(--paper-warm);
+  --secondary-foreground: var(--ink-soft);
+  --muted: var(--paper-deep);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--ochre);
+  --accent-foreground: var(--ink);
+  --destructive: var(--brand);
+  --destructive-foreground: #fff8ec;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--brand);
+  --radius: 0.75rem;
+
+  /* Texturas */
+  --texture-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-
-
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: var(--font-karla), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  --font-hand: var(--font-caveat), 'Segoe Script', cursive;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -63,30 +76,250 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+
+  --color-paper: var(--paper);
+  --color-paper-warm: var(--paper-warm);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-ochre: var(--ochre);
+  --color-olive: var(--olive);
+  --color-line: var(--line);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(
+        ellipse 120% 80% at 50% -10%,
+        #fffaf0 0%,
+        transparent 60%
+      );
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /* Grano de papel sobre toda la página */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    background-image: var(--texture-noise);
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: var(--ochre);
+    color: var(--ink);
+  }
+}
+
+@layer components {
+  /* ---- Papel y superficies ------------------------------------------- */
+
+  /* Ficha / tarjeta de cartulina con sombra sólida dibujada */
+  .card-paper {
+    background-color: var(--card);
+    border: 2px solid var(--ink);
+    box-shadow: 5px 5px 0 0 var(--ink);
+  }
+
+  .card-paper-soft {
+    background-color: var(--card);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 0 rgba(44, 34, 26, 0.22);
+  }
+
+  /* Papel rayado de cuaderno */
+  .paper-lined {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 27px,
+      rgba(109, 92, 74, 0.13) 27px 28px
+    );
+  }
+
+  /* Papel cuadriculado suave */
+  .paper-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(109, 92, 74, 0.09) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(109, 92, 74, 0.09) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* ---- Bordes trazados a mano ---------------------------------------- */
+
+  .wobble-a {
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  }
+  .wobble-b {
+    border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+  }
+  .wobble-c {
+    border-radius: 180px 20px 180px 24px / 22px 190px 20px 180px;
+  }
+
+  /* ---- Cinta adhesiva ------------------------------------------------- */
+
+  .tape {
+    position: relative;
+  }
+  .tape::before,
+  .tape::after {
+    content: '';
+    position: absolute;
+    top: -0.85rem;
+    width: 5.5rem;
+    height: 1.7rem;
+    background: rgba(221, 161, 44, 0.42);
+    border-left: 1px dashed rgba(255, 255, 255, 0.55);
+    border-right: 1px dashed rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 2px rgba(44, 34, 26, 0.15);
+    z-index: 2;
+  }
+  .tape::before {
+    left: 1.25rem;
+    transform: rotate(-6deg);
+  }
+  .tape::after {
+    right: 1.25rem;
+    transform: rotate(5deg);
+  }
+  .tape-single::after {
+    content: none;
+  }
+  .tape-single::before {
+    left: 50%;
+    margin-left: -2.75rem;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Tipografía anotada -------------------------------------------- */
+
+  /* Resaltador irregular detrás del texto */
+  .marker {
+    background-image: linear-gradient(
+      100deg,
+      rgba(221, 161, 44, 0) 0%,
+      rgba(221, 161, 44, 0.55) 4%,
+      rgba(221, 161, 44, 0.55) 96%,
+      rgba(221, 161, 44, 0) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 45%;
+    background-position: 0 78%;
+    padding-inline: 0.15em;
+  }
+
+  /* Etiqueta manuscrita de sección */
+  .eyebrow-hand {
+    font-family: var(--font-hand);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--brand);
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+
+  /* ---- Botones "sello" ------------------------------------------------ */
+
+  .btn-stamp {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border: 2px solid var(--ink);
+    background: var(--brand);
+    color: #fff8ec;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 0 var(--ink);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .btn-stamp:hover {
+    background: var(--brand-deep);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 var(--ink);
+  }
+  .btn-stamp:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 var(--ink);
+  }
+
+  .btn-stamp-ghost {
+    background: var(--card);
+    color: var(--ink);
+  }
+  .btn-stamp-ghost:hover {
+    background: var(--paper-warm);
+  }
+
+  /* ---- Inclinaciones sutiles ------------------------------------------ */
+
+  .tilt-l {
+    transform: rotate(-1.2deg);
+  }
+  .tilt-r {
+    transform: rotate(1.1deg);
+  }
+  .tilt-xs {
+    transform: rotate(-0.5deg);
+  }
+  .straighten {
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  }
+  .straighten:hover {
+    transform: rotate(0deg) translateY(-3px);
+  }
+
+  /* ---- Costura punteada ------------------------------------------------ */
+
+  .stitch {
+    border: 2px dashed var(--line);
+  }
+}
+
+@utility text-hand {
+  font-family: var(--font-hand);
+}
+
+@utility text-display {
+  font-family: var(--font-display);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .straighten,
+  .btn-stamp {
+    transition: none;
   }
 }

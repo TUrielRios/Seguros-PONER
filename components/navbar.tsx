@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, Phone } from "lucide-react"
+import { RoughUnderline, Squiggle } from "@/components/doodles"
 
 const navLinks = [
   { label: "Coberturas", href: "#coberturas" },
   { label: "Nosotros", href: "#nosotros" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Testimonios", href: "#testimonios" },
+  { label: "Cómo trabajamos", href: "#proceso" },
+  { label: "Clientes", href: "#testimonios" },
   { label: "Contacto", href: "#contacto" },
 ]
 
@@ -28,102 +28,117 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-background transition-shadow duration-300 ${scrolled ? "shadow-md" : ""
+      className={`fixed inset-x-0 top-0 z-50 bg-paper/95 backdrop-blur-sm transition-shadow duration-300 ${scrolled ? "shadow-[0_6px_24px_-12px_rgba(44,34,26,0.45)]" : ""
         }`}
     >
-      {/* Top bar with logo */}
-      <div className="border-b border-border">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          <a href="#" className="block">
-            <Image
-              src="/logo-new.png"
-              alt="Poner Seguros"
-              width={220}
-              height={60}
-              className="h-12 w-auto md:h-14"
-              priority
-            />
-          </a>
+      <div className="mx-auto flex h-[76px] max-w-6xl items-center justify-between gap-6 px-5 md:h-[92px] md:px-8">
+        <a href="#" className="flex shrink-0 items-center gap-3">
+          <Image
+            src="/logo-new.png"
+            alt="Poner Seguros"
+            width={220}
+            height={60}
+            className="h-11 w-auto mix-blend-multiply md:h-14"
+            priority
+          />
+          <span className="hidden text-hand text-lg leading-none text-ink-faint xl:block">
+            desde hace más de 15 años
+          </span>
+        </a>
 
-          <div className="hidden items-center gap-5 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
+          {navLinks.map((link) => (
             <a
-              href="tel:+541135963691"
-              className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              key={link.href}
+              href={link.href}
+              className="group relative whitespace-nowrap px-2.5 py-2 text-[15px] font-medium text-ink-soft transition-colors hover:text-ink"
             >
-              <Phone className="size-4" />
-              11 3596-3691
+              {link.label}
+              <RoughUnderline className="absolute inset-x-2 -bottom-0.5 h-2 scale-x-0 text-brand opacity-0 transition-all duration-200 group-hover:scale-x-100 group-hover:opacity-100" />
             </a>
-            <Button asChild size="sm">
-              <a href="#contacto">Solicitar cotización</a>
-            </Button>
-          </div>
-
-          {mounted ? (
-            <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon">
-                  <Menu className="size-5" />
-                  <span className="sr-only">Abrir menú</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-72 bg-background p-6">
-                <div className="mb-8">
-                  <Image
-                    src="/logo-new.png"
-                    alt="Poner Seguros"
-                    width={140}
-                    height={38}
-                    className="h-8 w-auto"
-                  />
-                </div>
-                <ul className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8">
-                  <Button asChild className="w-full">
-                    <a href="#contacto" onClick={() => setOpen(false)}>
-                      Solicitar cotización
-                    </a>
-                  </Button>
-                </div>
-              </SheetContent>
-            </Sheet>
-          ) : (
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="size-5" />
-              <span className="sr-only">Abrir menú</span>
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Navigation links bar */}
-      <div className="hidden border-b border-border bg-background md:block">
-        <nav className="mx-auto max-w-7xl px-6">
-          <ul className="flex items-center gap-1">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="inline-block px-5 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          ))}
         </nav>
+
+        <div className="hidden shrink-0 items-center gap-4 lg:flex">
+          <a
+            href="tel:+541135963691"
+            className="hidden items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-brand xl:flex"
+          >
+            <Phone className="size-4" />
+            11 3596-3691
+          </a>
+          <a
+            href="#contacto"
+            className="btn-stamp wobble-a px-5 py-2.5 text-sm"
+          >
+            Pedir presupuesto
+          </a>
+        </div>
+
+        {mounted ? (
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <button
+                type="button"
+                aria-label="Abrir menú"
+                className="card-paper-soft wobble-a flex size-11 items-center justify-center text-ink"
+              >
+                <Menu className="size-5" />
+              </button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-[85vw] max-w-xs items-start gap-0 border-l-2 border-ink bg-paper p-7"
+            >
+              <SheetTitle className="sr-only">Menú</SheetTitle>
+              <Image
+                src="/logo-new.png"
+                alt="Poner Seguros"
+                width={140}
+                height={38}
+                className="h-9 w-auto mix-blend-multiply"
+              />
+              <Squiggle className="mt-5 h-3 w-32 text-ochre" />
+
+              <ul className="mt-6 flex flex-col gap-5">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="text-display text-2xl font-semibold text-ink transition-colors hover:text-brand"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#contacto"
+                onClick={() => setOpen(false)}
+                className="btn-stamp wobble-a mt-8 w-full px-5 py-3 text-sm"
+              >
+                Pedir presupuesto
+              </a>
+              <a
+                href="tel:+541135963691"
+                className="mt-5 flex items-center gap-2 text-sm font-medium text-ink-soft"
+              >
+                <Phone className="size-4" />
+                11 3596-3691
+              </a>
+            </SheetContent>
+          </Sheet>
+        ) : (
+          <span className="card-paper-soft wobble-a flex size-11 items-center justify-center text-ink lg:hidden">
+            <Menu className="size-5" />
+          </span>
+        )}
       </div>
+
+      {/* Borde inferior cosido a mano */}
+      <div className="h-0.5 w-full bg-[repeating-linear-gradient(to_right,var(--ink)_0_10px,transparent_10px_18px)] opacity-25" />
     </header>
   )
 }
