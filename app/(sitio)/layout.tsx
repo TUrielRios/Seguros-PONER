@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Fraunces, Karla, Caveat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import '../globals.css'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
